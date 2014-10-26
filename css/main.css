@@ -1,0 +1,31 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+html, body {
+  width:  100%;
+  height: 100%;
+  margin: 0;
+  padding:0;
+}
+
+/* Terminal */
+canvas { 
+    display:block;    
+}
+
+canvas#terminal-bg-canvas {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+}
+
+canvas#terminal-text-canvas {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+}

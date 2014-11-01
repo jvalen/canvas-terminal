@@ -21,9 +21,14 @@ var cursor = function (context) {
 			x = xPos;
 			y = yPos;
 		}	
-		else {
-            //Measure to delete cursor track (-12,10,16)
-			ctx.clearRect(xPos, yPos-12, 10, 16);
+		else {            			
+            this.erase(xPos,yPos);
 		}
 	};
+    
+	this.erase = function (xPos,yPos) {
+        //Measure to delete cursor track (-12,10,16)
+        ctx.clearRect(xPos, yPos-12, 10, 16);        
+	};    
+    
 }

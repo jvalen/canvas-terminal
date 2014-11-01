@@ -73,8 +73,8 @@ var myString = function (context, text, p, xPosOffset, yPosOffset, w, tsize){
 	this.cr = function() {
 			var textSize= ctx.measureText(txt);
 
-			//Delete the cursor track
-			ctx.clearRect(textSize.width + 40, y - (caracterHeight - 1),textSize.width + offset, offset);
+			//Delete the cursor track			
+            cursor.erase((x)+(textSize.width)+4, y);
 			
 			//New line
 			y = y + offset;            

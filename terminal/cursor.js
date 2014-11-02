@@ -2,14 +2,19 @@
  * Create a cursor classs
  * @class cursor Implement a flashing terminal cursor like
  * @param {object} context A canvas context
+ * @param {String} customSymbol Cursor symbol
+ * @param {String} fontStyle CSS font-style
  * @returns {cursor}
  */
-var cursor = function (context, symbol) {
+var cursor = function (context, customSymbol, fontStyle) {
 	var ctx = context,
         x = new Number(0),
         y = new Number(0),
         cursorActive = new Boolean(true),
-        cursorChar = !!symbol ? symbol : '_';
+        symbol = !!customSymbol ? customSymbol : '_',
+        style = fontStyle,
+        cursorWidth = ctx.measureText(symbol).width,        
+        cursorHeight = measureFontHeight(style);
 	
 	function changeState () {
 		cursorActive = !cursorActive;
@@ -18,7 +23,7 @@ var cursor = function (context, symbol) {
 	this.draw = function (xPos,yPos) {			
 		changeState();	
 		if (cursorActive) {			
-			ctx.fillText(cursorChar, xPos, yPos);
+			ctx.fillText(symbol, xPos, yPos);
 			x = xPos;
 			y = yPos;
 		}	
@@ -28,8 +33,6 @@ var cursor = function (context, symbol) {
 	};
     
 	this.erase = function (xPos,yPos) {
-        //Measure to delete cursor track (-12,10,16)
-        ctx.clearRect(xPos, yPos-12, 10, 16);        
-	};    
-    
-}
+        ctx.clearRect(xPos, yPos - cursorHeight, cursorWidth, cursorHeight);        
+	};
+};

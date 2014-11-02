@@ -19,9 +19,10 @@ var Terminal = function (params) {
         //Text Variables
         title = params.title,
         fontSize = params.fontSize,
+        fontStyle = fontSize + "px Lucida Console",
         fontColor = params.fontColor,
-        p = new cursor(ctx1, params.cursorSymbol),
-        text = new myString(ctx1, "", p, xOffset, yOffset, width, fontSize),
+        p,
+        text,
         crHeight = 20,
         autoWriteId = 0,
         autoWriteActive = false;
@@ -29,7 +30,10 @@ var Terminal = function (params) {
     /* Public Methods */
     this.run = function() {
 
+        //Init
         setStyle(ctx1);
+        p = new cursor(ctx1, params.cursorSymbol, fontStyle);
+        text = new myString(ctx1, "", p, xOffset, yOffset, width, fontSize);
     
         drawBackground();
 
@@ -197,7 +201,7 @@ var Terminal = function (params) {
     
     function setStyle(context) {
         context.fillStyle = "#" + fontColor;
-        context.font = fontSize + "px Lucida Console";
+        context.font = fontStyle;
     };
     
     function executeCommand(command) {

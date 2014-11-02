@@ -70,3 +70,23 @@ function giveMeChar(keycode, keyboardEvent) {
     
     return resultChar;
 }
+
+/**
+ * Not a very accurate way to measure text height
+ * @param {String} fontStyle
+ * @returns {Integer}
+ */
+function measureFontHeight(fontStyle) {
+   var result = 0,
+       body = document.getElementsByTagName('body')[0],       
+       dummy = document.createElement('div'),
+       dummyText = document.createTextNode('M');
+       
+    dummy.appendChild(dummyText);
+    dummy.setAttribute('style', fontStyle + ';position:absolute;top:0;left:0');
+    body.appendChild(dummy);
+    result = dummy.offsetHeight;
+    body.removeChild(dummy);
+ 
+   return result;
+}

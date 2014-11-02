@@ -16,7 +16,8 @@ function init() {
             'title': "~ Canvas Terminal Demo ~",
             'fontSize': 15,
             'fontColor': '1EA900',
-            'backgroundColor': '000000'
+            'backgroundColor': '000000',
+            'cursorSymbol': ''
         }
     );    
     

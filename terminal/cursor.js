@@ -4,11 +4,12 @@
  * @param {object} context A canvas context
  * @returns {cursor}
  */
-var cursor = function (context) {
+var cursor = function (context, symbol) {
 	var ctx = context,
         x = new Number(0),
         y = new Number(0),
-        cursorActive = new Boolean(true);
+        cursorActive = new Boolean(true),
+        cursorChar = !!symbol ? symbol : '_';
 	
 	function changeState () {
 		cursorActive = !cursorActive;
@@ -17,7 +18,7 @@ var cursor = function (context) {
 	this.draw = function (xPos,yPos) {			
 		changeState();	
 		if (cursorActive) {			
-			ctx.fillText(String.fromCharCode(95), xPos, yPos);
+			ctx.fillText(cursorChar, xPos, yPos);
 			x = xPos;
 			y = yPos;
 		}	

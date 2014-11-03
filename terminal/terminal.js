@@ -17,13 +17,14 @@ var Terminal = function (params) {
         backgroundColor = params.backgroundColor,
         
         //Text Variables
-        title = params.title,
-        fontSize = params.fontSize,
-        fontStyle = fontSize + "px Lucida Console",
-        fontColor = params.fontColor,
+        title = params.title,        
+        fontStyle = params.fontSize + "px Lucida Console",
+        fontSize = measureFontHeight(fontStyle),
+        fontColor = params.fontColor,  
+        cursorSymbol = params.cursorSymbol,
         p,
         text,
-        crHeight = 20,
+        crHeight = !!params.lineHeight ? params.lineHeight : 20,
         autoWriteId = 0,
         autoWriteActive = false;
     
@@ -32,8 +33,8 @@ var Terminal = function (params) {
 
         //Init
         setStyle(ctx1);
-        p = new cursor(ctx1, params.cursorSymbol, fontStyle);
-        text = new myString(ctx1, "", p, xOffset, yOffset, width, fontSize);
+        p = new cursor(ctx1, cursorSymbol, fontStyle, crHeight);
+        text = new myString(ctx1, "", p, xOffset, yOffset, width, fontSize, crHeight);
     
         drawBackground();
 
@@ -58,7 +59,7 @@ var Terminal = function (params) {
                 if (event.keyCode === 13) {
                     //New line
                     yOffset += crHeight;
-                    p = new cursor(ctx2);
+                    p = new cursor(ctx2, cursorSymbol, fontStyle);
                     executeCommand(text.currentCommand());
                     text.cr();
                     text.crPrompt();
@@ -85,8 +86,8 @@ var Terminal = function (params) {
             clearInterval(backgroundId);
             clearInterval(autoWriteId);
 
-            ctx1.clearRect(0, 0, width+20, height+80);
-            ctx2.clearRect(0, 0, width+20, height+80);
+            ctx1.clearRect(0, 0, width, height);
+            ctx2.clearRect(0, 0, width, height);
 
             text.reset();
 
@@ -112,7 +113,7 @@ var Terminal = function (params) {
     /* Private Methods */
     function terminalHandler() {
         //Reset terminal						
-        if (text.returnYpos() >= (height-10)) {
+        if (text.returnYpos() >= (height)) {
                 ctx1.clearRect(0, 0, width, height);                
                 text.reset();
         }

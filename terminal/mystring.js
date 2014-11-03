@@ -8,39 +8,35 @@
  * @param {type} yPosOffset
  * @param {type} w
  * @param {type} tsize
+ * @param {Integer} lHeight Line height
  * @returns {myString}
  */
-
-var myString = function (context, text, p, xPosOffset, yPosOffset, w, tsize){	
+var myString = function (context, text, p, xPosOffset, yPosOffset, w, tsize, lHeight){
 	var ctx = context,
         txt = new String(text),
         cursor = p,
-        offset = 20,        
-        x = xPosOffset + offset,
-        y = yPosOffset + offset,
-        limit = w - (xPosOffset + offset * 2),
-        caracterHeight = tsize,        
+        indentOffset = 20,
+        newLineOffset = 5,
+        lineHeight = lHeight,
+        x = xPosOffset + indentOffset,
+        y = yPosOffset + indentOffset,
+        limit = w - (xPosOffset + indentOffset * 2),
+        characterHeight = tsize,        
         p_id = 0,
         initialData = {
-            xPosOffset: xPosOffset,
-            yPosOffset: yPosOffset
-        };
-    
-    // Private methods	
-	function size () {
-		return txt.length;
-	}
-	
-	function returnSubstring (ini, end) {
-		return txt.substring(ini, end);
-	}
+            xPosOffset: x,
+            yPosOffset: y
+        },
+        cursorDistanceToLastChar = 4,
+        cursorSpeed = 400;
+        
     
     // Public methods
 	this.reset = function() {
 		txt = new String(text);
-        x = initialData.xPosOffset + offset;
-        y = initialData.yPosOffset + offset;
-        ctx.fillText(">", x-(offset), y);
+        x = initialData.xPosOffset;
+        y = initialData.yPosOffset;
+        ctx.fillText(">", x - indentOffset, y);
 	};    
 	
 	this.returnYpos = function() {
@@ -53,14 +49,14 @@ var myString = function (context, text, p, xPosOffset, yPosOffset, w, tsize){
     
 	// Y coord of the last line
 	this.crPrompt = function() {
-		ctx.fillText(">", x-(offset), y);        
+		ctx.fillText(">", x - indentOffset, y);
 	};
 	
-	this.cursorLoop = function() {		
+	this.cursorLoop = function() {        
 		p_id = setInterval(function(){
 			var textSize = ctx.measureText(txt);	
-			cursor.draw((x)+(textSize.width)+4, y);
-		},400);
+			cursor.draw(x + textSize.width + cursorDistanceToLastChar, y);
+		},cursorSpeed);
 	};
     
 	this.add = function(text, keyboardEvent) {
@@ -74,10 +70,10 @@ var myString = function (context, text, p, xPosOffset, yPosOffset, w, tsize){
 			var textSize= ctx.measureText(txt);
 
 			//Delete the cursor track			
-            cursor.erase((x)+(textSize.width)+4, y);
+            cursor.erase(x + textSize.width + cursorDistanceToLastChar, y);
 			
 			//New line
-			y = y + offset;            
+			y = y + lineHeight + newLineOffset;
 			txt= new String(text);
 	};
     
@@ -88,25 +84,22 @@ var myString = function (context, text, p, xPosOffset, yPosOffset, w, tsize){
 	this.draw = function() {
 		var textSize= ctx.measureText(txt),
             char_aux= txt.charAt(textSize.width);
-
-		ctx.clearRect(x, y - (caracterHeight - 1), textSize.width + 10, 20);
+        
+        //Clean the line and paint the new string
+		ctx.clearRect(x, y - characterHeight, textSize.width + cursorDistanceToLastChar, lineHeight);
 		ctx.fillText(txt, x, y);
 
 		//If reach the end of line (not new prompt, just creat new line, could be a command split in several lines)
-		if (textSize.width >= limit){
-          		
-			//delete the cursor track
-			ctx.clearRect(textSize.width + 40, y - offset, textSize.width, offset);            
+		if (textSize.width >= limit) {
+            //Delete the cursor track			
+            cursor.erase(x + textSize.width + cursorDistanceToLastChar, y);
 			
 			//New line because line width exceeded
-			y =  y + offset;
+			y =  y + lineHeight + newLineOffset;
 			txt += char_aux;
-
 			txt = new String(text); 
-			/*
-				If we want to execute a command that is bigger than one line we have to concatenate every line
-				and finally executing that.
-			*/
+			
+            //TODO: Handle more than one line command
 			ctx.fillText( txt, x, y);
 		}
 

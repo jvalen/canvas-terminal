@@ -17,7 +17,8 @@ function init() {
             'fontSize': 15,
             'fontColor': '1EA900',
             'backgroundColor': '000000',
-            'cursorSymbol': ''
+            'cursorSymbol': '_',
+            'lineHeight': 20
         }
     );    
     

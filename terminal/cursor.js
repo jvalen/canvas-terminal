@@ -4,9 +4,10 @@
  * @param {object} context A canvas context
  * @param {String} customSymbol Cursor symbol
  * @param {String} fontStyle CSS font-style
+ * @param {Integer} lHeight Line height
  * @returns {cursor}
  */
-var cursor = function (context, customSymbol, fontStyle) {
+var cursor = function (context, customSymbol, fontStyle, lHeight) {
 	var ctx = context,
         x = new Number(0),
         y = new Number(0),
@@ -14,7 +15,8 @@ var cursor = function (context, customSymbol, fontStyle) {
         symbol = !!customSymbol ? customSymbol : '_',
         style = fontStyle,
         cursorWidth = ctx.measureText(symbol).width,        
-        cursorHeight = measureFontHeight(style);
+        cursorHeight = measureFontHeight(style),
+        lineHeight = lHeight;
 	
 	function changeState () {
 		cursorActive = !cursorActive;
@@ -33,6 +35,6 @@ var cursor = function (context, customSymbol, fontStyle) {
 	};
     
 	this.erase = function (xPos,yPos) {
-        ctx.clearRect(xPos, yPos - cursorHeight, cursorWidth, cursorHeight);        
+        ctx.clearRect(xPos, yPos - cursorHeight, cursorWidth, cursorHeight + lineHeight);
 	};
 };

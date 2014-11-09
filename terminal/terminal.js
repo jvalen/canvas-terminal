@@ -3,8 +3,10 @@
 var Terminal = function (params) {
 
 	//Background Variables
-	var ctx1 = params.ctx.cText,
-        ctx2 = params.ctx.cBg,
+	var ctx1 = params.ctx.cText.context,
+        ctx2 = params.ctx.cBg.context,
+        ctx1Elem = document.getElementById(params.ctx.cText.elemId),
+        ctx2Elem = document.getElementById(params.ctx.cBg.elemId),
         width = ctx1.canvas.clientWidth,
         height = ctx1.canvas.clientHeight,
         xOffset = params.xOffset,
@@ -26,7 +28,8 @@ var Terminal = function (params) {
         text,
         crHeight = !!params.lineHeight ? params.lineHeight : 20,
         autoWriteId = 0,
-        autoWriteActive = false;
+        autoWriteActive = false,
+        keyListener;
     
     /* Public Methods */
     this.run = function() {
@@ -45,47 +48,55 @@ var Terminal = function (params) {
         }
 
         //Input Handler
-        document.onkeydown = function(event){
-            event.preventDefault();
-            var keyCode;
+        keyListener = function () {
+            document.onkeydown = function(event) {
+                event.preventDefault();
+                var keyCode;
 
-            if(event === null) {
-              keyCode = window.event.keyCode; 
-            }
-            else {				
-                keyCode = event.keyCode;
-            }
-
-            if (!(backgroundActive || autoWriteActive)) {
-                switch (event.keyCode) {
-                    case 13:
-                        //New line
-                        yOffset += crHeight;
-                        p = new cursor(ctx2, cursorSymbol, fontStyle);
-                        executeCommand(text.currentCommand());
-                        text.cr();
-                        text.crPrompt();
-
-                        terminalHandler();
-                        break;
-                    case 8:
-                        //Remove last character
-                        text.removeLastChar();
-                        text.draw();
-                        
-                        terminalHandler();
-                        break;
-                    default:
-                        //New character
-                        text.add(keyCode, event);
-                        text.draw();
-
-                        terminalHandler();
-                        
-                        break;
+                if(event === null) {
+                  keyCode = window.event.keyCode; 
                 }
-            }
+                else {				
+                    keyCode = event.keyCode;
+                }
+
+                if (!(backgroundActive || autoWriteActive)) {
+                    switch (event.keyCode) {
+                        case 13:
+                            //New line
+                            yOffset += crHeight;
+                            p = new cursor(ctx2, cursorSymbol, fontStyle);
+                            executeCommand(text.currentCommand());
+                            text.cr();
+                            text.crPrompt();
+
+                            terminalHandler();
+                            break;
+                        case 8:
+                            //Remove last character
+                            text.removeLastChar();
+                            text.draw();
+
+                            terminalHandler();
+                            break;
+                        default:
+                            //New character
+                            text.add(keyCode, event);
+                            text.draw();
+
+                            terminalHandler();
+
+                            break;
+                    }
+                }
+            };            
         };
+
+        //Terminal is active and ready to type when the user click on it
+        addEvent(ctx1Elem, 'click', keyListener);
+        addEvent(ctx2Elem, 'click', keyListener);
+        eventFire(ctx1Elem, 'click');
+        eventFire(ctx2Elem, 'click');
     };
     
     this.stop = function() {

@@ -24,7 +24,7 @@
             input.setAttribute('type', 'text');
             input.setAttribute('name', 'hidden-input');
             input.setAttribute('id', 'hidden-input-' + params.canvasId.cText);
-            input.style.cssText = 'position:absolute;top:' + ctx1.canvas.offsetTop + 'px;';            
+            input.style.cssText = 'position:absolute;top:' + ctx1.canvas.offsetTop + 'px;display: none;';            
             document.querySelectorAll("body")[0].appendChild(input);
             
             params.ctx = {

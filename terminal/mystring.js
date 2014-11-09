@@ -65,7 +65,8 @@ var myString = function (context, text, p, xPosOffset, yPosOffset, w, tsize, lHe
         } else {
             txt += text;
         }
-	};	
+	};
+    
 	this.cr = function() {
 			var textSize= ctx.measureText(txt);
 
@@ -76,6 +77,12 @@ var myString = function (context, text, p, xPosOffset, yPosOffset, w, tsize, lHe
 			y = y + lineHeight + newLineOffset;
 			txt= new String(text);
 	};
+    
+    this.removeLastChar = function () {
+        var textSize= ctx.measureText(txt);
+        cursor.erase(x + textSize.width + cursorDistanceToLastChar, y);
+        txt = txt.substr(0, txt.length - 1);        
+    };
     
 	this.currentCommand = function() {
 			return (txt);			

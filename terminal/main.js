@@ -18,7 +18,15 @@
             ctx2 = checkCanvasSupport(params.canvasId.cBg),
             currentTerminal;
 
-        if ((ctx1) && (ctx2)){            
+        if ((ctx1) && (ctx2)){
+            //Create a hidden input to trigger phone keyboard
+            var input = document.createElement('input');
+            input.setAttribute('type', 'text');
+            input.setAttribute('name', 'hidden-input');
+            input.setAttribute('id', 'hidden-input-' + params.canvasId.cText);
+            input.style.cssText = 'position:absolute;top:' + ctx1.canvas.offsetTop + 'px;';            
+            document.querySelectorAll("body")[0].appendChild(input);
+            
             params.ctx = {
                 'cText': {
                     context: ctx1,

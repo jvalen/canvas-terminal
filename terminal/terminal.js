@@ -46,6 +46,7 @@ var Terminal = function (params) {
 
         //Input Handler
         document.onkeydown = function(event){
+            event.preventDefault();
             var keyCode;
 
             if(event === null) {
@@ -55,23 +56,33 @@ var Terminal = function (params) {
                 keyCode = event.keyCode;
             }
 
-            if (!(backgroundActive || autoWriteActive)) {                
-                if (event.keyCode === 13) {
-                    //New line
-                    yOffset += crHeight;
-                    p = new cursor(ctx2, cursorSymbol, fontStyle);
-                    executeCommand(text.currentCommand());
-                    text.cr();
-                    text.crPrompt();
-                    
-                    terminalHandler();
-                }
-                else {
-                    //New character
-                    text.add(keyCode, event);
-                    text.draw();
+            if (!(backgroundActive || autoWriteActive)) {
+                switch (event.keyCode) {
+                    case 13:
+                        //New line
+                        yOffset += crHeight;
+                        p = new cursor(ctx2, cursorSymbol, fontStyle);
+                        executeCommand(text.currentCommand());
+                        text.cr();
+                        text.crPrompt();
 
-                    terminalHandler();
+                        terminalHandler();
+                        break;
+                    case 8:
+                        //Remove last character
+                        text.removeLastChar();
+                        text.draw();
+                        
+                        terminalHandler();
+                        break;
+                    default:
+                        //New character
+                        text.add(keyCode, event);
+                        text.draw();
+
+                        terminalHandler();
+                        
+                        break;
                 }
             }
         };

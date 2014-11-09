@@ -91,7 +91,7 @@ var Terminal = function (params) {
                 }
             };
             
-            document.getElementById('phoneTest').focus();
+            ctx1Elem.focus();
         };
 
         //Terminal is active and ready to type when the user click on it

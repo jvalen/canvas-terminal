@@ -223,9 +223,8 @@ var Terminal = function (params) {
         if (/^autotext\(\'[\s\S]*\'\)/.test(command)) {
             parameter = command.split("'")[1];
             autoWrite(parameter);
-        } else {
+        } else if (/\S/.test(command)) {
             autoWrite(command + ': command not found');
         }
-
     }
 };

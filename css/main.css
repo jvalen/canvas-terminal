@@ -29,3 +29,33 @@ canvas#terminal-text-canvas {
     left: 0;
     top: 0;
 }
+
+canvas#second-bg-canvas {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 200px;
+}
+
+canvas#second-text-canvas {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 200px;
+}
+
+canvas#third-bg-canvas {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 400px;
+}
+
+canvas#third-text-canvas {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 400px;
+}
+
+

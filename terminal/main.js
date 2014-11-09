@@ -19,7 +19,16 @@
             currentTerminal;
 
         if ((ctx1) && (ctx2)){
-            params.ctx = {'cText': ctx1, 'cBg': ctx2 };
+            params.ctx = {
+                'cText': {
+                    context: ctx1,
+                    elemId: params.canvasId.cText
+                },
+                'cBg': {
+                    context: ctx2,
+                    elemId: params.canvasId.cBg
+                }
+            };
             currentTerminal = {
                 id: terminalCounter++,
                 terminal: new Terminal(params)
@@ -31,7 +40,7 @@
     };
     
     canvasTerminal.startTerminal = function (terminalId) {
-        launchAction('run', terminalId);
+        launchAction('run', terminalId);        
     };
     
     canvasTerminal.stopTerminal = function (terminalId) {

@@ -90,3 +90,23 @@ function measureFontHeight(fontStyle) {
  
    return result;
 }
+
+/*
+ * Add an event to a DOM element
+ */
+function addEvent(element, myEvent, fnc) {
+    return ((element.attachEvent) ? element.attachEvent('on' + myEvent, fnc) : element.addEventListener(myEvent, fnc, false));
+}
+
+/*
+ * Launch an event
+ */
+function eventFire(el, etype){
+  if (el.fireEvent) {
+    el.fireEvent('on' + etype);
+  } else {
+    var evObj = document.createEvent('Events');
+    evObj.initEvent(etype, true, false);
+    el.dispatchEvent(evObj);
+  }
+}

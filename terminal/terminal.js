@@ -91,7 +91,7 @@ var Terminal = function (params) {
                 }
             };
             
-            
+            document.getElementById('phoneTest').focus();
         };
 
         //Terminal is active and ready to type when the user click on it
@@ -99,7 +99,6 @@ var Terminal = function (params) {
         addEvent(ctx2Elem, 'click', keyListener);
         eventFire(ctx1Elem, 'click');
         eventFire(ctx2Elem, 'click');
-        document.getElementById('phoneTest').focus();
     };
     
     this.stop = function() {

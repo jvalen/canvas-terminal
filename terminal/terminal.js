@@ -91,7 +91,8 @@ var Terminal = function (params) {
                 }
             };
             
-            document.getElementById('hidden-input-' + parameters.ctx.cText.elemId).focus();
+            document.getElementById('hidden-input').focus();
+            window.scroll(0,ctx1.canvas.offsetTop);
         };
 
         //Terminal is active and ready to type when the user click on it

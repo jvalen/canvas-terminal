@@ -12,10 +12,10 @@ function init() {
                 type: 'l-r',
                 speed: 10
             },
-            'opacity': 0.8,
-            'title': "~ Canvas Terminal Demo ~",
+            'opacity': 0.9,
+            'title': "# Canvas Terminal Demo #",
             'fontSize': 15,
-            'fontColor': '1EA900',
+            'fontColor': '18F018',
             'backgroundColor': '000000',
             'cursorSymbol': '_',
             'lineHeight': 20
@@ -36,10 +36,10 @@ function init() {
                 speed: 10
             },
             'opacity': 0.5,
-            'title': "~ Canvas Terminal Demo ~",
+            'title': "# Shell No 2 #",
             'fontSize': 15,
-            'fontColor': '000000',
-            'backgroundColor': 'E82212',
+            'fontColor': '2B3132',
+            'backgroundColor': '002B36',
             'cursorSymbol': '_',
             'lineHeight': 20
         }
@@ -59,10 +59,10 @@ function init() {
                 speed: 10
             },
             'opacity': 0.8,
-            'title': "~ Canvas Terminal Demo ~",
+            'title': "@random",
             'fontSize': 15,
             'fontColor': 'FFFFFF',
-            'backgroundColor': 'B321BD',
+            'backgroundColor': 'AA2D2F',
             'cursorSymbol': '_',
             'lineHeight': 20
         }

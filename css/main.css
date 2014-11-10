@@ -34,28 +34,28 @@ canvas#second-bg-canvas {
     position: absolute;
     z-index: 1;
     left: 0;
-    top: 200px;
+    top: 270px;
 }
 
 canvas#second-text-canvas {
     position: absolute;
     z-index: 2;
     left: 0;
-    top: 200px;
+    top: 270px;
 }
 
 canvas#third-bg-canvas {
     position: absolute;
     z-index: 1;
     left: 0;
-    top: 400px;
+    top: 540px;
 }
 
 canvas#third-text-canvas {
     position: absolute;
     z-index: 2;
     left: 0;
-    top: 400px;
+    top: 540px;
 }
 
 

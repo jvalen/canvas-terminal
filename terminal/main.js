@@ -1,42 +1,54 @@
-/*
+/**
+ * Canvas Terminal
+ * 
+ * Customizable Web command line
+ * Canvas + Javascrpit
+ * 	
+ * 	The MIT License (MIT)
+ * 	Copyright (c) 2014 sprawlwalk
+ */
 
-	* Canvas Terminal *
-
-	-- Web command line configurable --
-		(HTML5: Canvas Tag + Javascrpit)
-
-*/
 (function(canvasTerminal, undefined) {
     "use strict";
     
     var terminalArray = [],
         terminalCounter = 0;
     
-    /* Public methods */
+    /**
+     * Creates a Terminal
+     * @constructor
+     * @param {object} params
+     * @returns {currentTerminal.id|integer}
+     */
     canvasTerminal.create = function(params) {
         var ctx1 = checkCanvasSupport(params.canvasId.cText),
             ctx2 = checkCanvasSupport(params.canvasId.cBg),
             currentTerminal;
 
         if ((ctx1) && (ctx2)){
-            //Create a hidden input to trigger phone keyboard
+            /** Create a hidden input to trigger phone keyboard */
             var input = document.createElement('input');
             input.setAttribute('type', 'text');
             input.setAttribute('name', 'hidden-input');
             input.setAttribute('id', 'hidden-input-' + params.canvasId.cText);
             input.style.cssText = 'position:absolute;top:' + ctx1.canvas.offsetTop + 'px;opacity: 0;';
-            document.querySelectorAll("body")[0].appendChild(input);
+            document.querySelectorAll("body")[0].appendChild(input);            
             
+            /** Setup params */
             params.ctx = {
                 'cText': {
                     context: ctx1,
-                    elemId: params.canvasId.cText
+                    elemId: params.canvasId.cText,
+                    elem: document.getElementById(params.canvasId.cText)
                 },
                 'cBg': {
                     context: ctx2,
-                    elemId: params.canvasId.cBg
+                    elemId: params.canvasId.cBg,
+                    elem: document.getElementById(params.canvasId.cBg)
                 }
             };
+            
+            /** Add the new created terminal to the array */
             currentTerminal = {
                 id: terminalCounter++,
                 terminal: new Terminal(params)
@@ -47,19 +59,36 @@
         }
     };
     
+    /**
+     * Start selected terminal
+     * @param {integer} terminalId
+     */
     canvasTerminal.startTerminal = function (terminalId) {
         launchAction('run', terminalId);        
     };
     
+    /**
+     * Stop selected terminal
+     * @param {integer} terminalId
+     */    
     canvasTerminal.stopTerminal = function (terminalId) {
         launchAction('stop', terminalId);
     };
     
+    /**
+     * Reset selected terminal
+     * @param {integer} terminalId
+     */    
     canvasTerminal.resetTerminal = function (terminalId) {
         launchAction('reset', terminalId);
     };
     
-    /* Private methods */
+    /**
+     * Return terminal array position
+     * @private
+     * @param {integer} terminalId
+     * @returns {integer}
+     */
     function giveMeTerminalPosition(terminalId) {
         for (var i = 0; i < terminalArray.length; i++) {
             if (terminalId === terminalArray[i].id) {
@@ -69,6 +98,12 @@
         return -1;
     }
     
+    /**
+     * Fires selected action
+     * @private
+     * @param {string} action
+     * @param {integer} id
+     */
     function launchAction(action, id) {
         var position = giveMeTerminalPosition(id),
             currentTerminal;

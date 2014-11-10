@@ -2,7 +2,6 @@
  * Check canvas support and return context if exist, false in other case
  * @param {string} canvasId
  */
-
 function checkCanvasSupport(canvasId) {
     "use strict";
     var canvas = document.querySelector('#' + canvasId),
@@ -91,15 +90,20 @@ function measureFontHeight(fontStyle) {
    return result;
 }
 
-/*
+/**
  * Add an event to a DOM element
+ * @param {object} element
+ * @param {string} myEvent
+ * @param {function} fnc
  */
 function addEvent(element, myEvent, fnc) {
     return ((element.attachEvent) ? element.attachEvent('on' + myEvent, fnc) : element.addEventListener(myEvent, fnc, false));
 }
 
-/*
+/**
  * Launch an event
+ * @param {object} el
+ * @param {string} etype
  */
 function eventFire(el, etype){
   if (el.fireEvent) {

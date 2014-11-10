@@ -37,11 +37,11 @@ function init() {
             },
             'opacity': 0.5,
             'title': "# Shell No 2 #",
-            'fontSize': 15,
+            'fontSize': 30,
             'fontColor': '2B3132',
             'backgroundColor': '002B36',
             'cursorSymbol': '_',
-            'lineHeight': 20
+            'lineHeight': 35
         }
     );        
     
@@ -60,11 +60,11 @@ function init() {
             },
             'opacity': 0.8,
             'title': "@random",
-            'fontSize': 15,
+            'fontSize': 45,
             'fontColor': 'FFFFFF',
             'backgroundColor': 'AA2D2F',
             'cursorSymbol': '_',
-            'lineHeight': 20
+            'lineHeight': 50
         }
     );        
     

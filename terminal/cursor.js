@@ -13,7 +13,7 @@ var cursor = function (context, customSymbol, fontStyle, lHeight) {
         cursorActive = new Boolean(true),
         symbol = !!customSymbol ? customSymbol : '_',
         style = fontStyle,
-        cursorWidth = ctx.measureText(symbol).width,        
+        cursorWidth = measureCharWidth(ctx, symbol),
         cursorHeight = measureFontHeight(style),
         lineHeight = lHeight;
 
@@ -30,7 +30,7 @@ var cursor = function (context, customSymbol, fontStyle, lHeight) {
 			y = yPos;
 		}	
 		else {            			
-            this.erase(xPos,yPos);
+            this.erase(xPos - 1, yPos); //FIXME: 1px error offset
 		}
 	};
     
@@ -39,8 +39,8 @@ var cursor = function (context, customSymbol, fontStyle, lHeight) {
      * @param {integer} xPos
      * @param {integer} yPos
      */
-	this.erase = function (xPos,yPos) {
-        ctx.clearRect(xPos, yPos - cursorHeight, cursorWidth, cursorHeight + lineHeight);
+	this.erase = function (xPos, yPos) {
+        ctx.clearRect(xPos, yPos - (cursorHeight + (cursorWidth/2)), cursorWidth, cursorHeight + lineHeight);
 	};
     
     /**

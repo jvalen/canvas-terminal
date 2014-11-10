@@ -91,6 +91,16 @@ function measureFontHeight(fontStyle) {
 }
 
 /**
+ * Not a very accurate way to measure text width within a canvas
+ * @param {object} context Canvans ctx
+ * @param {String} character
+ * @returns {Integer}
+ */
+function measureCharWidth(context, character) {
+   return context.measureText(character).width + 2; //FIXME: 2px error offset 
+}
+
+/**
  * Add an event to a DOM element
  * @param {object} element
  * @param {string} myEvent
